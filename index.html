@@ -275,27 +275,59 @@
     </div>
 
     <script>
-        // کۆدی وێنەکان و دەقەکان
+        // وێنەکان بە ناوی ڕاستەقینەیان
         const photos = [
             {
-                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo1.jpg",
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/23134050-D87E-4770-8CCA-0381AD045A99.jpeg",
                 caption: "تۆ جوانترین بەشی ژیانمی 💕"
             },
             {
-                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo2.jpg",
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/71F3244A-0559-4C56-A4F6-E0D49A93BC84.JPEG",
                 caption: "هەر کاتێ تۆم دیت، دڵم ڕادەکشێت 🥰"
             },
             {
-                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo3.jpg",
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_6685.jpeg",
                 caption: "تۆ خۆشترین نھێنی ژیانمی 💝"
             },
             {
-                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo4.jpg",
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_7032.JPG",
                 caption: "چاوت ئەستێرەی ئاسمانی منن ✨"
             },
             {
-                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo5.jpg",
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_7704.jpeg",
                 caption: "دەستم بگرە و ھەرگیز مەھێڵە 💑"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_7999.jpeg",
+                caption: "هەناسەکانم بە ناوی تۆوە دەدەم 🌹"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8001.jpeg",
+                caption: "تۆ بەهەشتی منیت لەسەر زەوی 💖"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8002.jpeg",
+                caption: "خەندەکانت جوانترین ئاوازی ژیانن 🎵"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8076.JPG",
+                caption: "لە تەنیشت تۆدا، کات ڕادەوەستێت ⏰"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8077.JPG",
+                caption: "تۆ نەخشەکەی دڵمی 💝"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8078.JPG",
+                caption: "هەموو ڕۆژێک لەگەڵ تۆدا جەژنە 🎉"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8090.JPG",
+                caption: "تۆ خەونی منی کە بوویتە ڕاستی ✨"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/IMG_8097.jpeg",
+                caption: "دڵم بۆ تۆ لێدەدات، ئەمڕۆ و هەتاهەتایە 💗"
             }
         ];
 
@@ -336,6 +368,11 @@
             
             setTimeout(() => {
                 currentPhoto.src = photos[index].url;
+                currentPhoto.onerror = function() {
+                    // ئەگەر وێنەکە نەدۆزرایەوە
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZlMGUwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2ZmNDc1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPldlbmV5IExhZblx1MDBmMzwvdGV4dD48L3N2Zz4=';
+                    photoCaption.textContent = 'وێنەکە نەدۆزرایەوە، تکایە لینکەکە بپشکنە 🥺';
+                };
                 photoCaption.textContent = photos[index].caption;
                 counter.textContent = `${index + 1} / ${photos.length}`;
                 
@@ -351,19 +388,12 @@
             let newIndex = currentIndex + direction;
             
             if (newIndex >= photos.length) {
-                newIndex = 0;  // بگەڕێرەوە بۆ یەکەم وێنە
+                newIndex = 0;
             } else if (newIndex < 0) {
-                newIndex = photos.length - 1;  // بڕۆ بۆ دوایین وێنە
+                newIndex = photos.length - 1;
             }
             
             showPhoto(newIndex);
-        }
-
-        // دووبارە دروستکردنی پلەیەری دەنگی ئەگەر پێویست بوو
-        function ensureAudioPlays() {
-            if (audioPlayer) {
-                audioPlayer.src = audioPlayer.src;
-            }
         }
 
         // گۆڕینی خۆکارانەی وێنەکان هەموو 5 چرکە جارێک
