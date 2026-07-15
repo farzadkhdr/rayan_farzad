@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ckb">
 <head>
@@ -25,6 +26,7 @@
             position: relative;
         }
 
+        /* سەرەتا: ناو و دوگمە */
         .hero {
             text-align: center;
             z-index: 10;
@@ -72,7 +74,7 @@
             box-shadow: 0 12px 48px rgba(200, 50, 120, 0.8);
         }
 
-        /* کاروسێل */
+        /* کاروسێل - پڕ لە شاشە */
         .carousel-container {
             display: none;
             position: fixed;
@@ -101,8 +103,7 @@
             position: relative;
         }
 
-        .carousel-slide img,
-        .carousel-slide video {
+        .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -126,6 +127,7 @@
             animation: fadeInUp 1.2s ease;
         }
 
+        /* دوگمەکانی کۆنتڕۆڵ */
         .carousel-control {
             position: absolute;
             top: 50%;
@@ -155,6 +157,7 @@
             right: 20px;
         }
 
+        /* نیشانەی ژمارەی وێنە */
         .carousel-counter {
             position: absolute;
             top: 20px;
@@ -171,6 +174,7 @@
             direction: ltr;
         }
 
+        /* دوگمەی داخستن */
         .close-album {
             position: absolute;
             top: 20px;
@@ -193,6 +197,7 @@
             transform: scale(1.05);
         }
 
+        /* نیشانەی گۆرانی */
         .music-indicator {
             position: fixed;
             bottom: 20px;
@@ -211,16 +216,16 @@
             align-items: center;
             gap: 8px;
         }
-
         .music-indicator span {
             display: inline-block;
             animation: pulse 1.8s infinite;
         }
-
         @keyframes pulse {
             0%,100% { opacity: 0.3; }
             50% { opacity: 1; }
         }
+
+        /* ئەنیمەیشنەکان */
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1); }
@@ -234,6 +239,7 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
+        /* مۆبایل */
         @media (max-width: 600px) {
             .hero h1 { font-size: 2.2rem; }
             .open-btn { font-size: 1.2rem; padding: 0.8rem 2.2rem; }
@@ -246,19 +252,21 @@
 </head>
 <body>
 
+    <!-- سەرەتا -->
     <div class="hero" id="heroSection">
         <h1>✨ ئەلبوومی من و تۆ ✨</h1>
         <p class="sub">ڕەیان جیان... چاو زەیتوونەکەم، ئەمە هی من و تۆیە</p>
         <button class="open-btn" id="openAlbumBtn">📖 کلیک بکە بۆ کردنەوەی ئەلبوومەکە</button>
     </div>
 
+    <!-- کاروسێل -->
     <div class="carousel-container" id="carouselContainer">
         <button class="close-album" id="closeAlbumBtn">✕</button>
         <div class="carousel-counter" id="counter">1 / 1</div>
 
         <button class="carousel-control prev" id="prevBtn">‹</button>
         <div class="carousel-slide" id="carouselSlide">
-            <img id="slideMedia" src="" alt="وێنە" />
+            <img id="slideImage" src="" alt="وێنە" />
             <div class="carousel-caption" id="slideCaption">💫 وتەی ئاشقانە</div>
         </div>
         <button class="carousel-control next" id="nextBtn">›</button>
@@ -270,14 +278,13 @@
 
     <script>
         // --------------------------------------------------
-        // ١. هەموو فایلەکان (وێنە + ڤیدیۆ)
+        // ١. لیستی وێنەکان (تەنها ناوەکان)
         // --------------------------------------------------
-        const allFiles = [
+        const imageFiles = [
             "23134050-D87E-4770-8CCA-03...",
             "4B28EFBF-54E7-45EA-8A1A-A5...",
             "6000B0A4-B57B-4981-B107-01D...",
             "71F3244A-0559-4C56-A4F6-E0...",
-            "7433172290352266552.mov",
             "A8C88C7E-0488-4891-849C-6E...",
             "A8C88C7E-0488-4891-84C9-6E...",
             "E9C0CB32-CF8D-4F0D-9189-62...",
@@ -290,13 +297,13 @@
             "IMG_8076.JPG"
         ];
 
-        // پاڵاوتن بۆ وێنە و ڤیدیۆ (هەموو ئەوانەی پاشگری دروستیان هەیە)
-        const mediaFiles = allFiles.filter(f =>
-            f.match(/\.(jpeg|jpg|png|gif|webp|mov|mp4|avi|mkv)$/i)
+        // پاڵاوتن بۆ وێنەکان
+        const images = imageFiles.filter(f =>
+            f.match(/\.(jpeg|jpg|png|gif|webp)$/i)
         );
 
         // --------------------------------------------------
-        // ٢. وتە ئاشقانەکان (زیاتر بۆ وێنە زۆرەکان)
+        // ٢. وتە ئاشقانەکان
         // --------------------------------------------------
         const loveQuotes = [
             "ڕەیان جیان، دڵم بۆ تۆ لێدەدات",
@@ -312,81 +319,48 @@
             "تۆ هەموو خەونەکانمیت",
             "ڕۆژانە بە تۆ ڕووناکترن",
             "دەستم بگرە بۆ هەمیشە",
-            "تۆ هۆکاری زەردەخەنەی منیت",
-            "تۆ ھەستی ژیانمیت",
-            "هەر هەناسەیەک بۆ تۆ",
-            "تۆ جوانترین خەونمیت",
-            "دڵم بۆ تۆ دەڕوات",
-            "تۆ هەموو جیهانمیت",
-            "بە تۆ ژیان جوانە"
+            "تۆ هۆکاری زەردەخەنەی منیت"
         ];
 
         // --------------------------------------------------
         // ٣. کاروسێل
         // --------------------------------------------------
         let currentIndex = 0;
-        const slideMedia = document.getElementById('slideMedia');
+        const slideImg = document.getElementById('slideImage');
         const slideCaption = document.getElementById('slideCaption');
         const counter = document.getElementById('counter');
         const container = document.getElementById('carouselContainer');
         const hero = document.getElementById('heroSection');
 
-        // بۆ ئەوەی وێنەی دووبارە نەبێتەوە
-        const uniqueMedia = [...new Set(mediaFiles)];
+        // وێنەکان و وتەکان بە هەمان ڕیزبەندی
+        // بۆ ئەوەی وێنە دووبارە نەبێتەوە، Set بەکاربهێنە
+        const uniqueImages = [...new Set(images)];
 
         function showSlide(index) {
-            if (uniqueMedia.length === 0) return;
+            if (uniqueImages.length === 0) return;
 
-            if (index < 0) index = uniqueMedia.length - 1;
-            if (index >= uniqueMedia.length) index = 0;
+            // ئەگەر لە سنوور دەرچوو، بیگەڕێنەوە
+            if (index < 0) index = uniqueImages.length - 1;
+            if (index >= uniqueImages.length) index = 0;
 
             currentIndex = index;
-            const file = uniqueMedia[currentIndex];
+
+            const file = uniqueImages[currentIndex];
             const caption = loveQuotes[currentIndex % loveQuotes.length];
-            const isVideo = /\.(mov|mp4|avi|mkv)$/i.test(file);
 
-            // دروستکردنی تەگی دروست (img یان video)
-            const parent = slideMedia.parentNode;
-            const newMedia = isVideo ? document.createElement('video') : document.createElement('img');
-
-            newMedia.src = `n/${file}`;
-            newMedia.alt = caption;
-            if (isVideo) {
-                newMedia.muted = true;
-                newMedia.autoplay = false;
-                newMedia.controls = false;
-                newMedia.loop = true;
-                newMedia.style.width = '100%';
-                newMedia.style.height = '100%';
-                newMedia.style.objectFit = 'contain';
-                // ڤیدیۆ خۆکار پلەی ناکات، بەڵام دەتوانیت کرتە بکەیت بۆ پلەی
-                newMedia.addEventListener('click', () => {
-                    if (newMedia.paused) newMedia.play();
-                    else newMedia.pause();
-                });
-            }
-
-            // جێگۆڕکێی تەگی کۆن
-            parent.replaceChild(newMedia, slideMedia);
-
-            // نوێکردنەوەی گۆڕاوەکە
-            window.slideMedia = newMedia;
-
+            // ڕێڕەوی وێنە
+            slideImg.src = `n/${file}`;
+            slideImg.alt = caption;
             slideCaption.textContent = `💫 ${caption}`;
-            counter.textContent = `${currentIndex + 1} / ${uniqueMedia.length}`;
+            counter.textContent = `${currentIndex + 1} / ${uniqueImages.length}`;
 
-            // ئەنیمەیشن
-            newMedia.style.animation = 'none';
+            // دووبارە ئەنیمەیشن
+            slideImg.style.animation = 'none';
             slideCaption.style.animation = 'none';
             requestAnimationFrame(() => {
-                newMedia.style.animation = 'zoomIn 0.8s ease';
+                slideImg.style.animation = 'zoomIn 0.8s ease';
                 slideCaption.style.animation = 'fadeInUp 0.8s ease';
             });
-
-            // ئەگەر ڤیدیۆیە، پلەی بکە
-            if (isVideo) {
-                newMedia.play().catch(() => {});
-            }
         }
 
         // --------------------------------------------------
@@ -400,6 +374,7 @@
             showSlide(currentIndex + 1);
         });
 
+        // کلیلەکانی کیبۆرد
         document.addEventListener('keydown', (e) => {
             if (!container.classList.contains('active')) return;
             if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
@@ -408,7 +383,7 @@
         });
 
         // --------------------------------------------------
-        // ٥. کردنەوە و داخستن
+        // ٥. کردنەوە و داخستنی ئەلبووم
         // --------------------------------------------------
         let audioPlayer = null;
         let autoSlideInterval = null;
@@ -418,33 +393,30 @@
             hero.style.display = 'none';
             document.body.style.overflow = 'hidden';
 
-            if (uniqueMedia.length > 0) {
+            // وێنەی یەکەم پیشان بدە
+            if (uniqueImages.length > 0) {
                 showSlide(0);
             }
 
-            // گۆرانی Khodahafezi لە یوتیوب (تەنها دەنگ)
+            // دەستپێکردنی گۆرانی (بە فایلێکی دەنگی ڕاستەوخۆ)
             if (!audioPlayer) {
-                audioPlayer = document.createElement('iframe');
-                audioPlayer.src = 'https://www.youtube.com/embed/v8St1xp_Ql4?autoplay=1&loop=1&playlist=v8St1xp_Ql4&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&widgetid=1&enablejsapi=1';
-                audioPlayer.style.position = 'absolute';
-                audioPlayer.style.width = '0';
-                audioPlayer.style.height = '0';
-                audioPlayer.style.border = '0';
-                audioPlayer.style.opacity = '0';
-                audioPlayer.style.pointerEvents = 'none';
-                audioPlayer.allow = 'autoplay; encrypted-media';
+                audioPlayer = document.createElement('audio');
+                // لینکی دەنگی گۆرانی (لە یوتیوبەوە وەرگیراوە بە شێوەی mp3)
+                // ئەگەر فایلی دەنگت هەیە، ڕێڕەوی بەم شێوەیە بنووسە: "music/song.mp3"
+                audioPlayer.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                audioPlayer.loop = true;
+                audioPlayer.volume = 0.5;
+                audioPlayer.play().catch(() => {
+                    // ئەگەر پلەی خۆکار ڕێگەپێنەدرا، دوگمەیەک پیشان بدە
+                });
                 document.body.appendChild(audioPlayer);
-
-                // هەوڵی پلەی کردنی خۆکار
-                try {
-                    audioPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                } catch(e) {}
             }
 
+            // سلایدشۆی خۆکار (هەر ٥ چرکە جارێک)
             if (autoSlideInterval) clearInterval(autoSlideInterval);
             autoSlideInterval = setInterval(() => {
                 showSlide(currentIndex + 1);
-            }, 6000);
+            }, 5000);
         }
 
         function closeAlbum() {
@@ -455,16 +427,16 @@
                 clearInterval(autoSlideInterval);
                 autoSlideInterval = null;
             }
-            // پلەی ڤیدیۆکە ڕابگرە
-            if (window.slideMedia && window.slideMedia.tagName === 'VIDEO') {
-                window.slideMedia.pause();
+            if (audioPlayer) {
+                audioPlayer.pause();
+                // ناگرینەوە، بۆ ئەوەی دووبارە دەستپێبکاتەوە کاتێک دووبارە دەکرێتەوە
             }
         }
 
         document.getElementById('openAlbumBtn').addEventListener('click', openAlbum);
         document.getElementById('closeAlbumBtn').addEventListener('click', closeAlbum);
 
-        // سوایپ
+        // پشتگیری لە سوایپ لەسەر مۆبایل
         let touchStartX = 0;
         let touchEndX = 0;
         document.addEventListener('touchstart', (e) => {
@@ -480,7 +452,7 @@
             }
         });
 
-        console.log(`💖 ئەلبوومی من و تۆ - ${uniqueMedia.length} وێنە و ڤیدیۆ ئامادەیە!`);
+        console.log('💖 ئەلبوومی من و تۆ - کاروسێلی پڕ لە شاشە ئامادەیە!');
     </script>
 </body>
 </html>
