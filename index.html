@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
-<html lang="ckb">
+<html lang="ckb" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ئەلبوومی من و تۆ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڕەیان - ئەلبوومی من و تۆ</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,445 +14,375 @@
         }
 
         body {
-            background: #0d050d;
-            font-family: 'Noto Naskh Arabic', 'Segoe UI', cursive, sans-serif;
-            direction: rtl;
-            height: 100vh;
-            overflow: hidden;
+            font-family: 'Noto Naskh Arabic', serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 25%, #ffa5a5 50%, #ffb8b8 75%, #ffd4d4 100%);
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            position: relative;
+            align-items: center;
+            overflow-x: hidden;
         }
 
-        /* سەرەتا: ناو و دوگمە */
-        .hero {
+        /* پەڕەی سەرەتا */
+        .intro-page {
             text-align: center;
-            z-index: 10;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             animation: fadeIn 2s ease;
-            padding: 1rem;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f9d3e8, #ff8aae, #f9d3e8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 60px rgba(255, 80, 140, 0.4);
-            line-height: 1.4;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero .sub {
-            font-size: 1.2rem;
-            color: #d4b0c4;
-            margin-top: 0.5rem;
-            opacity: 0.9;
+        .title {
+            font-size: 3.5em;
+            color: #8b0000;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #5c0000;
+            margin-bottom: 50px;
             font-style: italic;
         }
 
-        .open-btn {
-            background: linear-gradient(135deg, #b03a6a, #7a2a4a);
+        .heart {
+            font-size: 4em;
+            animation: heartbeat 1.5s infinite;
+            display: block;
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .enter-btn {
+            background: linear-gradient(45deg, #ff4757, #ff6348);
+            color: white;
             border: none;
-            padding: 1rem 3.5rem;
-            border-radius: 60px;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff5f0;
+            padding: 20px 60px;
+            font-size: 1.8em;
+            font-family: 'Noto Naskh Arabic', serif;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(180, 40, 100, 0.6);
-            transition: transform 0.3s, box-shadow 0.3s;
-            font-family: inherit;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(255, 200, 220, 0.3);
-            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4);
+            margin-top: 20px;
         }
 
-        .open-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 48px rgba(200, 50, 120, 0.8);
+        .enter-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.6);
         }
 
-        /* کاروسێل - پڕ لە شاشە */
-        .carousel-container {
+        /* پەڕەی ئەلبوم */
+        .album-page {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0a050a;
-            z-index: 100;
-            overflow: hidden;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .carousel-container.active {
+        .album-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 80vh;
+            perspective: 1500px;
+        }
+
+        .album {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #ffe0e0, #ffcccc);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photo-card {
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            transform: scale(0.8) rotateY(90deg);
         }
 
-        .carousel-slide {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        .photo-card.active {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
         }
 
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
+        .photo-card img {
+            max-width: 100%;
+            max-height: 60%;
             object-fit: contain;
-            animation: zoomIn 1s ease;
-            background: #0a050a;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
-        .carousel-caption {
-            position: absolute;
-            bottom: 10%;
-            left: 0;
-            right: 0;
+        .photo-caption {
+            font-size: 1.4em;
+            color: #8b0000;
             text-align: center;
-            color: #f5e6f0;
-            font-size: 2rem;
-            font-weight: 700;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 0 40px rgba(180, 40, 100, 0.5);
-            padding: 1rem 2rem;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            pointer-events: none;
-            animation: fadeInUp 1.2s ease;
+            line-height: 1.8;
+            font-family: 'Noto Naskh Arabic', serif;
         }
 
-        /* دوگمەکانی کۆنتڕۆڵ */
-        .carousel-control {
+        .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 150, 200, 0.2);
-            color: white;
-            font-size: 3rem;
-            padding: 0.5rem 1.2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            font-size: 3em;
             cursor: pointer;
-            border-radius: 60px;
-            transition: all 0.3s;
-            z-index: 200;
-            user-select: none;
+            padding: 20px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 10;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff4757;
+            backdrop-filter: blur(5px);
         }
 
-        .carousel-control:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
             transform: translateY(-50%) scale(1.1);
         }
 
-        .carousel-control.prev {
+        .prev-btn {
             left: 20px;
         }
-        .carousel-control.next {
+
+        .next-btn {
             right: 20px;
         }
 
-        /* نیشانەی ژمارەی وێنە */
-        .carousel-counter {
+        .counter {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 150, 200, 0.1);
-            z-index: 200;
-            font-family: sans-serif;
-            direction: ltr;
-        }
-
-        /* دوگمەی داخستن */
-        .close-album {
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 150, 200, 0.2);
-            color: white;
-            font-size: 2rem;
-            padding: 0.3rem 1.2rem;
-            cursor: pointer;
-            border-radius: 60px;
-            transition: all 0.3s;
-            z-index: 200;
-            font-family: sans-serif;
-        }
-
-        .close-album:hover {
-            background: rgba(255, 50, 50, 0.3);
-            transform: scale(1.05);
-        }
-
-        /* نیشانەی گۆرانی */
-        .music-indicator {
-            position: fixed;
             bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8b0000;
+            font-size: 1.2em;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+        }
+
+        .music-note {
+            position: absolute;
+            top: 20px;
             right: 20px;
-            color: #b080a0;
-            font-size: 0.8rem;
-            opacity: 0.6;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 6px 16px;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 150, 200, 0.1);
-            z-index: 300;
-            direction: ltr;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .music-indicator span {
-            display: inline-block;
-            animation: pulse 1.8s infinite;
-        }
-        @keyframes pulse {
-            0%,100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            font-size: 2em;
+            animation: float 3s infinite;
+            opacity: 0.8;
         }
 
-        /* ئەنیمەیشنەکان */
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes zoomIn {
-            0% { opacity: 0; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
         }
 
-        /* مۆبایل */
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.2rem; }
-            .open-btn { font-size: 1.2rem; padding: 0.8rem 2.2rem; }
-            .carousel-caption { font-size: 1.2rem; bottom: 8%; padding: 0.8rem; }
-            .carousel-control { font-size: 2rem; padding: 0.3rem 0.8rem; }
-            .carousel-control.prev { left: 8px; }
-            .carousel-control.next { right: 8px; }
+        .hidden {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2em;
+            }
+            .photo-card {
+                width: 85%;
+                height: 65%;
+            }
+            .nav-btn {
+                font-size: 2em;
+                width: 50px;
+                height: 50px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- سەرەتا -->
-    <div class="hero" id="heroSection">
-        <h1>✨ ئەلبوومی من و تۆ ✨</h1>
-        <p class="sub">ڕەیان جیان... چاو زەیتوونەکەم، ئەمە هی من و تۆیە</p>
-        <button class="open-btn" id="openAlbumBtn">📖 کلیک بکە بۆ کردنەوەی ئەلبوومەکە</button>
+    <!-- پەڕەی سەرەتا -->
+    <div id="introPage" class="intro-page visible">
+        <div class="heart">💝</div>
+        <h1 class="title">
+            ڕەیان<br>
+            جیان کەسیاتی مەرگ<br>
+            جوان چاو زەیتوونەکەم<br>
+            ئەمە ئەلبوومی من و تۆیە
+        </h1>
+        <p class="subtitle">💕 هەموو ساتەکانی ژیانم لەگەڵ تۆدا 💕</p>
+        <button class="enter-btn" onclick="openAlbum()">
+            💝 کلیک بکە بۆ کردنەوەی ئەلبوومەکە 💝
+        </button>
     </div>
 
-    <!-- کاروسێل -->
-    <div class="carousel-container" id="carouselContainer">
-        <button class="close-album" id="closeAlbumBtn">✕</button>
-        <div class="carousel-counter" id="counter">1 / 1</div>
-
-        <button class="carousel-control prev" id="prevBtn">‹</button>
-        <div class="carousel-slide" id="carouselSlide">
-            <img id="slideImage" src="" alt="وێنە" />
-            <div class="carousel-caption" id="slideCaption">💫 وتەی ئاشقانە</div>
-        </div>
-        <button class="carousel-control next" id="nextBtn">›</button>
-
-        <div class="music-indicator">
-            <span>🎵</span> گۆرانی خۆشەویستی لە پشتەوە
+    <!-- پەڕەی ئەلبوم -->
+    <div id="albumPage" class="album-page hidden">
+        <div class="album-container">
+            <button class="nav-btn prev-btn" onclick="changePhoto(-1)">❮</button>
+            <div class="album">
+                <div class="music-note">🎵</div>
+                <div class="photo-card active" id="photoCard">
+                    <img id="currentPhoto" src="" alt="وێنەی ئەلبوم">
+                    <div class="photo-caption" id="photoCaption"></div>
+                </div>
+                <div class="counter" id="counter"></div>
+            </div>
+            <button class="nav-btn next-btn" onclick="changePhoto(1)">❯</button>
         </div>
     </div>
 
     <script>
-        // --------------------------------------------------
-        // ١. لیستی وێنەکان (تەنها ناوەکان)
-        // --------------------------------------------------
-        const imageFiles = [
-            "23134050-D87E-4770-8CCA-03...",
-            "4B28EFBF-54E7-45EA-8A1A-A5...",
-            "6000B0A4-B57B-4981-B107-01D...",
-            "71F3244A-0559-4C56-A4F6-E0...",
-            "A8C88C7E-0488-4891-849C-6E...",
-            "A8C88C7E-0488-4891-84C9-6E...",
-            "E9C0CB32-CF8D-4F0D-9189-62...",
-            "IMG_6685.jpeg",
-            "IMG_7032.JPG",
-            "IMG_7704.jpeg",
-            "IMG_7999.jpeg",
-            "IMG_8001.jpeg",
-            "IMG_8002.jpg",
-            "IMG_8076.JPG"
-        ];
-
-        // پاڵاوتن بۆ وێنەکان
-        const images = imageFiles.filter(f =>
-            f.match(/\.(jpeg|jpg|png|gif|webp)$/i)
-        );
-
-        // --------------------------------------------------
-        // ٢. وتە ئاشقانەکان
-        // --------------------------------------------------
-        const loveQuotes = [
-            "ڕەیان جیان، دڵم بۆ تۆ لێدەدات",
-            "چاو زەیتوونەکەم، جوانیی جیهان",
-            "تۆ هەموو شیعرەکانی منیت",
-            "ئەم ڕۆژانە بە تۆ جوانن",
-            "بۆ هەمیشە، من و تۆ",
-            "خۆشەویستی بێ کۆتا",
-            "تۆ وەک مانگێکی شەوی تاریک",
-            "دڵم تەنها بۆ تۆ دەلرزێت",
-            "هەموو وێنەیەک بیرۆکەیەکە لە تۆ",
-            "ئەم ساتانە بۆ تۆن",
-            "تۆ هەموو خەونەکانمیت",
-            "ڕۆژانە بە تۆ ڕووناکترن",
-            "دەستم بگرە بۆ هەمیشە",
-            "تۆ هۆکاری زەردەخەنەی منیت"
-        ];
-
-        // --------------------------------------------------
-        // ٣. کاروسێل
-        // --------------------------------------------------
-        let currentIndex = 0;
-        const slideImg = document.getElementById('slideImage');
-        const slideCaption = document.getElementById('slideCaption');
-        const counter = document.getElementById('counter');
-        const container = document.getElementById('carouselContainer');
-        const hero = document.getElementById('heroSection');
-
-        // وێنەکان و وتەکان بە هەمان ڕیزبەندی
-        // بۆ ئەوەی وێنە دووبارە نەبێتەوە، Set بەکاربهێنە
-        const uniqueImages = [...new Set(images)];
-
-        function showSlide(index) {
-            if (uniqueImages.length === 0) return;
-
-            // ئەگەر لە سنوور دەرچوو، بیگەڕێنەوە
-            if (index < 0) index = uniqueImages.length - 1;
-            if (index >= uniqueImages.length) index = 0;
-
-            currentIndex = index;
-
-            const file = uniqueImages[currentIndex];
-            const caption = loveQuotes[currentIndex % loveQuotes.length];
-
-            // ڕێڕەوی وێنە
-            slideImg.src = `n/${file}`;
-            slideImg.alt = caption;
-            slideCaption.textContent = `💫 ${caption}`;
-            counter.textContent = `${currentIndex + 1} / ${uniqueImages.length}`;
-
-            // دووبارە ئەنیمەیشن
-            slideImg.style.animation = 'none';
-            slideCaption.style.animation = 'none';
-            requestAnimationFrame(() => {
-                slideImg.style.animation = 'zoomIn 0.8s ease';
-                slideCaption.style.animation = 'fadeInUp 0.8s ease';
-            });
-        }
-
-        // --------------------------------------------------
-        // ٤. کۆنتڕۆڵەکان
-        // --------------------------------------------------
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            showSlide(currentIndex - 1);
-        });
-
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            showSlide(currentIndex + 1);
-        });
-
-        // کلیلەکانی کیبۆرد
-        document.addEventListener('keydown', (e) => {
-            if (!container.classList.contains('active')) return;
-            if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
-            if (e.key === 'ArrowRight') showSlide(currentIndex + 1);
-            if (e.key === 'Escape') closeAlbum();
-        });
-
-        // --------------------------------------------------
-        // ٥. کردنەوە و داخستنی ئەلبووم
-        // --------------------------------------------------
-        let audioPlayer = null;
-        let autoSlideInterval = null;
-
-        function openAlbum() {
-            container.classList.add('active');
-            hero.style.display = 'none';
-            document.body.style.overflow = 'hidden';
-
-            // وێنەی یەکەم پیشان بدە
-            if (uniqueImages.length > 0) {
-                showSlide(0);
+        // کۆدی وێنەکان و دەقەکان
+        const photos = [
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo1.jpg",
+                caption: "تۆ جوانترین بەشی ژیانمی 💕"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo2.jpg",
+                caption: "هەر کاتێ تۆم دیت، دڵم ڕادەکشێت 🥰"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo3.jpg",
+                caption: "تۆ خۆشترین نھێنی ژیانمی 💝"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo4.jpg",
+                caption: "چاوت ئەستێرەی ئاسمانی منن ✨"
+            },
+            {
+                url: "https://raw.githubusercontent.com/farzadkhdr/rayan_farzad/main/n/photo5.jpg",
+                caption: "دەستم بگرە و ھەرگیز مەھێڵە 💑"
             }
+        ];
 
-            // دەستپێکردنی گۆرانی (بە فایلێکی دەنگی ڕاستەوخۆ)
+        let currentIndex = 0;
+        let audioPlayer = null;
+
+        // کردنەوەی ئەلبوم و دەستپێکردنی موزیک
+        function openAlbum() {
+            document.getElementById('introPage').classList.remove('visible');
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('albumPage').classList.remove('hidden');
+            document.getElementById('albumPage').classList.add('visible');
+            
+            // دروستکردنی پلەیەری دەنگی بە شێوەیەکی شاراوە
             if (!audioPlayer) {
-                audioPlayer = document.createElement('audio');
-                // لینکی دەنگی گۆرانی (لە یوتیوبەوە وەرگیراوە بە شێوەی mp3)
-                // ئەگەر فایلی دەنگت هەیە، ڕێڕەوی بەم شێوەیە بنووسە: "music/song.mp3"
-                audioPlayer.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-                audioPlayer.loop = true;
-                audioPlayer.volume = 0.5;
-                audioPlayer.play().catch(() => {
-                    // ئەگەر پلەی خۆکار ڕێگەپێنەدرا، دوگمەیەک پیشان بدە
-                });
+                audioPlayer = document.createElement('iframe');
+                audioPlayer.style.display = 'none';
+                audioPlayer.width = '0';
+                audioPlayer.height = '0';
+                audioPlayer.src = 'https://www.youtube.com/embed/v8St1xp_Ql4?autoplay=1&loop=1&playlist=v8St1xp_Ql4&controls=0&showinfo=0&rel=0';
+                audioPlayer.allow = 'autoplay';
                 document.body.appendChild(audioPlayer);
             }
-
-            // سلایدشۆی خۆکار (هەر ٥ چرکە جارێک)
-            if (autoSlideInterval) clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(() => {
-                showSlide(currentIndex + 1);
-            }, 5000);
+            
+            showPhoto(0);
         }
 
-        function closeAlbum() {
-            container.classList.remove('active');
-            hero.style.display = 'block';
-            document.body.style.overflow = 'auto';
-            if (autoSlideInterval) {
-                clearInterval(autoSlideInterval);
-                autoSlideInterval = null;
+        // پیشاندانی وێنە
+        function showPhoto(index) {
+            const photoCard = document.getElementById('photoCard');
+            const currentPhoto = document.getElementById('currentPhoto');
+            const photoCaption = document.getElementById('photoCaption');
+            const counter = document.getElementById('counter');
+            
+            // ئەنیمەیشنی گۆڕینی وێنە
+            photoCard.style.transform = 'scale(0.8) rotateY(-90deg)';
+            photoCard.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentPhoto.src = photos[index].url;
+                photoCaption.textContent = photos[index].caption;
+                counter.textContent = `${index + 1} / ${photos.length}`;
+                
+                photoCard.style.transform = 'scale(1) rotateY(0deg)';
+                photoCard.style.opacity = '1';
+            }, 400);
+            
+            currentIndex = index;
+        }
+
+        // گۆڕینی وێنەکان
+        function changePhoto(direction) {
+            let newIndex = currentIndex + direction;
+            
+            if (newIndex >= photos.length) {
+                newIndex = 0;  // بگەڕێرەوە بۆ یەکەم وێنە
+            } else if (newIndex < 0) {
+                newIndex = photos.length - 1;  // بڕۆ بۆ دوایین وێنە
             }
+            
+            showPhoto(newIndex);
+        }
+
+        // دووبارە دروستکردنی پلەیەری دەنگی ئەگەر پێویست بوو
+        function ensureAudioPlays() {
             if (audioPlayer) {
-                audioPlayer.pause();
-                // ناگرینەوە، بۆ ئەوەی دووبارە دەستپێبکاتەوە کاتێک دووبارە دەکرێتەوە
+                audioPlayer.src = audioPlayer.src;
             }
         }
 
-        document.getElementById('openAlbumBtn').addEventListener('click', openAlbum);
-        document.getElementById('closeAlbumBtn').addEventListener('click', closeAlbum);
+        // گۆڕینی خۆکارانەی وێنەکان هەموو 5 چرکە جارێک
+        setInterval(() => {
+            if (document.getElementById('albumPage').classList.contains('visible')) {
+                changePhoto(1);
+            }
+        }, 5000);
 
-        // پشتگیری لە سوایپ لەسەر مۆبایل
-        let touchStartX = 0;
-        let touchEndX = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        document.addEventListener('touchend', (e) => {
-            if (!container.classList.contains('active')) return;
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) showSlide(currentIndex + 1);
-                else showSlide(currentIndex - 1);
+        // کۆنتڕۆڵ بە کیبۆرد
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('albumPage').classList.contains('visible')) {
+                if (e.key === 'ArrowRight') {
+                    changePhoto(1);
+                } else if (e.key === 'ArrowLeft') {
+                    changePhoto(-1);
+                }
             }
         });
-
-        console.log('💖 ئەلبوومی من و تۆ - کاروسێلی پڕ لە شاشە ئامادەیە!');
     </script>
 </body>
 </html>
